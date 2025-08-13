@@ -1,0 +1,295 @@
+/* style.css */
+
+/*
+==========================================
+  1. Variables & Base Styles
+==========================================
+*/
+:root {
+    --green: #8AA624;
+    --light-green: #DBE4C9;
+    --off-white: #FFFFF0;
+    --orange: #FEA405;
+    --dark-text: #1e293b; /* slate-800 */
+    --medium-text: #475569; /* slate-600 */
+    --light-text: #64748b; /* slate-500 */
+    --border-color: #e2e8f0; /* slate-200 */
+    --background-color: #f8fafc; /* slate-50 */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--off-white);
+    color: var(--dark-text);
+}
+
+.font-heading {
+    font-family: 'Lexend', sans-serif;
+}
+
+/*
+==========================================
+  2. Animations
+==========================================
+*/
+
+/* Background Blobs Animation */
+.blob-1, .blob-2, .blob-3 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+}
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--light-green);
+    top: -150px;
+    left: -150px;
+    animation: move 25s infinite alternate;
+}
+.blob-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--orange);
+    top: 20%;
+    right: -100px;
+    animation: move 30s infinite alternate-reverse;
+}
+.blob-3 {
+    width: 350px;
+    height: 350px;
+    background: var(--green);
+    bottom: -150px;
+    left: 20%;
+    animation: move 20s infinite alternate;
+}
+
+@keyframes move {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 50px) scale(1.2); }
+}
+
+/* Fade-in animation for content */
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered text animation */
+.stagger-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s forwards;
+}
+
+/* Flash animation for new bids */
+.flash {
+    animation: flash-animation 1.5s ease-out;
+}
+
+@keyframes flash-animation {
+    0% { background-color: transparent; }
+    25% { background-color: rgba(138, 166, 36, 0.2); }
+    100% { background-color: transparent; }
+}
+
+/*
+==========================================
+  3. Component Styles
+==========================================
+*/
+
+/* *** MODAL FIXES ARE HERE *** */
+#modal-container {
+    /* This allows the modal to be scrollable on small screens by adding padding */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    overflow-y: auto;
+}
+
+#modal-content {
+    /* This ensures the modal doesn't get pushed off-screen */
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem; /* 12px */
+    font-weight: 600;
+    font-family: 'Lexend', sans-serif;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+.btn:active:not(:disabled) {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: none;
+}
+.btn-primary {
+    background-color: var(--green);
+    color: white;
+}
+.btn-primary:hover:not(:disabled) {
+    background-color: #7b9420;
+}
+.btn-secondary {
+    background-color: var(--light-green);
+    color: var(--dark-text);
+}
+.btn-secondary:hover:not(:disabled) {
+    background-color: #c9d3b9;
+}
+.btn-accent {
+    background-color: var(--orange);
+    color: white;
+}
+.btn-accent:hover:not(:disabled) {
+    background-color: #e59404;
+}
+
+/* Task Cards */
+.task-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+}
+
+/* Progress Stepper */
+.stepper-item {
+    position: relative;
+    flex: 1;
+}
+.stepper-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 1rem;
+    transform: translateX(50%);
+    height: 2px;
+    width: 100%;
+    background-color: #e2e8f0; /* slate-200 */
+    z-index: 0;
+    transition: background-color 0.4s ease;
+}
+.stepper-item .step-circle {
+    transition: all 0.4s ease;
+}
+.stepper-item.active .step-circle {
+    background-color: var(--green);
+    color: white;
+    border-color: var(--green);
+}
+.stepper-item.active .step-title {
+    font-weight: 600;
+    color: var(--dark-text);
+}
+.stepper-item.completed .step-circle {
+    background-color: var(--green);
+    color: white;
+    border-color: var(--green);
+}
+.stepper-item.completed:not(:last-child)::after {
+    background-color: var(--green);
+}
+
+/* Form Inputs */
+.form-input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    padding: 0.65rem 1rem;
+    color: var(--dark-text);
+    transition: all 0.2s ease-in-out;
+}
+.form-input:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px var(--light-green);
+}
+
+/* Chat Styles */
+.chat-box {
+    background-color: #f1f5f9; /* slate-100 */
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    height: 24rem; /* 384px */
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.chat-bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+.chat-bubble.sent {
+    background-color: var(--green);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0.25rem;
+}
+.chat-bubble.received {
+    background-color: white;
+    color: var(--dark-text);
+    align-self: flex-start;
+    border: 1px solid var(--border-color);
+    border-bottom-left-radius: 0.25rem;
+}
+.chat-timestamp {
+    font-size: 0.75rem; /* 12px */
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    margin-top: 0.25rem;
+}
+.received .chat-timestamp {
+    color: var(--light-text);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* slate-300 */
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* slate-400 */
+}
+
+/* Style for urgent task cards */
+.task-card.urgent-task {
+    border-color: #f97316; /* A strong orange color */
+    box-shadow: 0 0 25px 5px rgba(249, 115, 22, 0.4); /* A more noticeable glow */
+    transform: scale(1.02); /* Make it slightly larger */
+}
